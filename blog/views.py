@@ -5,15 +5,15 @@ from .models import Post
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm
 
-def post_list(request):
+def post_list(request):　# post_list.htmlに接続する関数
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
-def post_detail(request, pk):
+def post_detail(request, pk):　# post_detail.htmlに接続する関数
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
 
-def post_new(request):
+def post_new(request):　# post_edit.htmlに接続する関数
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
@@ -26,7 +26,7 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
-def post_edit(request, pk):
+def post_edit(request, pk):　# post_list.htmlに接続する関数
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
